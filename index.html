@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <script
+      src="https://unpkg.com/react@16/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js"></script>
+  </head>
+  <body>
+    <h1>My React App</h1>
+    <div id="root"></div>
+    <script type="text/babel">
+      const { useEffect, useState } = React;
+
+      const App = () => {
+        const [guests, setGuests] = useState([]);
+        useEffect(() => {
+          axios.get("/api/guests").then((response) => setGuests(response.data));
+        }, []);
+        return (
+          <ul>
+            {guests.map((guest) => {
+              return <li>{guest.name}</li>;
+            })}
+          </ul>
+        );
+      };
+      ReactDOM.render(<hr />, document.querySelector("#root"));
+    </script>
+  </body>
+</html>
