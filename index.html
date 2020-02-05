@@ -22,7 +22,7 @@
       const App = () => {
         const [guests, setGuests] = useState([]);
         useEffect(() => {
-          axios.get("/api/guests").then((response) => setGuests(response.data));
+          axios.get("localhost:3000/api/guests").then((response) => setGuests(response.data));
         }, []);
         return (
           <ul>
@@ -32,7 +32,7 @@
           </ul>
         );
       };
-      ReactDOM.render(<hr />, document.querySelector("#root"));
+      ReactDOM.render(<div><hr/><App /></div>, document.querySelector("#root"));
     </script>
   </body>
 </html>
