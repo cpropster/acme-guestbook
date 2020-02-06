@@ -17,22 +17,41 @@
     <script type="text/babel">
       const { useEffect, useState } = React;
 
-      
-
       const App = () => {
         const [guests, setGuests] = useState([]);
+        const [name, setName] = useState([]);
         useEffect(() => {
-          axios.get("localhost:3000/api/guests").then((response) => setGuests(response.data));
+          axios.get("/api/guests").then((response) => setGuests(response.data));
         }, []);
+
+        const onSubmit = (ev) => {
+          ev.preventDefault;
+          axios.post("/api/guests", { name }).then((response) => {
+            setGuests([...guests, response.data]);
+            setName("");
+          });
+        };
+
         return (
-          <ul>
-            {guests.map((guest) => {
-              return <li>{guest.name}</li>;
-            })}
-          </ul>
+          <div>
+            <form onSubmit={onSubmit}>
+              <input
+                type="text"
+                placeholder="username"
+                value={name}
+                onChange={(ev) => setName(ev.target.value)}
+              />
+              <button>Sign In</button>
+            </form>
+            <ul>
+              {guests.map((guest) => {
+                return <li key={guest.id}>{guest.name}</li>;
+              })}
+            </ul>
+          </div>
         );
       };
-      ReactDOM.render(<div><hr/><App /></div>, document.querySelector("#root"));
+      ReactDOM.render(<App />, document.querySelector("#root"));
     </script>
   </body>
 </html>
